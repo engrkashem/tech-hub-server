@@ -36,6 +36,22 @@ const run = async () => {
             const stockItem = await productCollection.findOne(query);
             res.send(stockItem);
         });
+
+        //update stock
+        app.put('/inventory/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedProduct = req.body;
+            const previousProduct = { _id: ObjectId(id) };
+            const option = { upsert: true };
+            const updatedStock = {
+                $set: {
+                    quantity: updatedProduct.quantity
+                }
+            };
+            const result = await productCollection.updateOne(previousProduct, updatedStock, option);
+            res.send(result);
+
+        })
     }
     finally {
 
