@@ -24,7 +24,7 @@ const run = async () => {
         //products API
         app.get('/products', async (req, res) => {
             const query = {};
-            const cursor = productCollection.find(query);
+            const cursor = productCollection.find(query).limit(6);
             const products = await cursor.toArray();
             res.send(products);
         });
@@ -34,7 +34,7 @@ const run = async () => {
     }
 }
 run().catch(console.dir);
-
+//https://protected-ridge-43119.herokuapp.com/
 
 app.get('/', (req, res) => {
     res.send('Tech Hub Server is running..');
