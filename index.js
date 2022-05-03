@@ -22,6 +22,14 @@ const run = async () => {
         await client.connect();
         const productCollection = client.db("techHub").collection("products");
 
+        //Post API
+        app.post('/products', async (req, res) => {
+            const newProduct = req.body;
+            const result = await productCollection.insertOne(newProduct);
+            console.log('adding new user', newProduct);
+            res.send(result);
+        });
+
         //products API
         app.get('/products', async (req, res) => {
             const query = {};
@@ -32,7 +40,7 @@ const run = async () => {
 
         app.get('/inventory', async (req, res) => {
             const query = {};
-            const cursor = productCollection.find(query).limit(10);
+            const cursor = productCollection.find(query);
             const result = await cursor.toArray();
             res.send(result);
         });
