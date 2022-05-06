@@ -52,6 +52,15 @@ const run = async () => {
             res.send(stockItem);
         });
 
+        //GET products by email
+        app.get('/productByEmail', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email };
+            const cursor = productCollection.find(query);
+            const result = await cursor.toArray();
+            res.send(result);
+        })
+
         //update stock
         app.put('/inventory/:id', async (req, res) => {
             const id = req.params.id;
